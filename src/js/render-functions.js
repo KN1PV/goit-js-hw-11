@@ -5,13 +5,14 @@ const imageList = document.querySelector(".gallery");
 const loader = document.querySelector(".loader");
 
 function createImageCard(image) {
+    const shortAlt = image.tags.split(',').slice(0, 3).join(', ');
     return `
     <li class="gallery-item">
         <a href="${image.largeImageURL}" class="gallery-link">
             <img
                 class="gallery-image"
                 src="${image.webformatURL}"
-                alt="${image.tags}"
+                alt="${shortAlt}"
             />
             <div class="info">
                 <div class="info-item">
