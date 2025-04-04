@@ -3,6 +3,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const imageList = document.querySelector(".gallery");
 const loader = document.querySelector(".loader");
+let lightbox = null;
 
 function createImageCard(image) {
     const shortAlt = image.tags.split(',').slice(0, 3).join(', ');
@@ -41,16 +42,22 @@ export function createGallery(images) {
     const createMurkup = images.map(createImageCard).join('');
     imageList.insertAdjacentHTML('beforeend', createMurkup);
 
-    const lightbox = new SimpleLightbox('.gallery a', {
-        captionsData: 'alt',
-        captionDelay: 250,
-    });
-
-    lightbox.refresh();
+    if (lightbox) {
+        lightbox.refresh();
+    } else {
+        lightbox = new SimpleLightbox('.gallery a', {
+            captionsData: 'alt',
+            captionDelay: 250,
+        });
+    }
 }
 
 export function clearGallery() {
     imageList.innerHTML = '';
+    if (lightbox) {
+        lightbox.destroy();
+        lightbox = null;
+    }
 }
 
 export function showLoader() {
